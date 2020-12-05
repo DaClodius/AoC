@@ -10,10 +10,9 @@ def part_two(codes):
     seat_ids = []
     for code in codes:
         seat_ids.append(get_seat_id(code))
-    seat_ids.sort()
-    for index, seat_id in enumerate(seat_ids):
-        if seat_ids[index - 1] == seat_id - 2:
-            return seat_id - 1
+    for seat_id in sorted(seat_ids):
+        if seat_id + 1 not in seat_ids:
+            return seat_id + 1
     return -1
 
 def get_seat_id(code):
