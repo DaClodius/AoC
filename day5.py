@@ -21,8 +21,8 @@ def get_seat_id(code):
     column = binary_code_to_int(code[-3:], 'L', 'R')
     return row * 8 + column
 
-def binary_code_to_int(code, c0, c1):
-    return int((code.replace(c0, '0').replace(c1, '1')), 2)
+def binary_code_to_int(code, char_zero, char_one):
+    return int((code.replace(char_zero, '0').replace(char_one, '1')), 2)
 
 with open('input/day5') as _file:
     codes = [line.rstrip() for line in _file]
