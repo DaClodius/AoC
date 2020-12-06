@@ -1,24 +1,13 @@
+from collections import Counter
+
 def part_one():
-    return count_answers(False)
+    return sum([len(Counter(''.join(g))) for g in groups])
 
 def part_two():
-    return count_answers(True)
+    return sum([len([v for v in Counter(''.join(g)).values() if v == len(g)]) for g in groups])
 
-def count_answers(everyone):
-    summa = 0
-    for group in groups:
-        answers_counter = [0] * 26
-        for answers in group.split('\n'):
-            for answer in answers:
-                answers_counter[ord(answer) - 97] += 1
-        if everyone:
-            summa += answers_counter.count(group.count('\n') + 1)
-        else:
-            summa += 26 - answers_counter.count(0)
-    return summa
-
-with open('input/day6') as _file:
-    groups = _file.read().strip('\n').split('\n\n')
+with open('input/day6') as f:
+    groups = [l.strip().split() for l in f.read().split('\n\n')]
 
 print(part_one())
 print(part_two())
