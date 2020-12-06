@@ -1,4 +1,4 @@
-def part_one(codes):
+def part_one():
     max_seat_id = 0
     for code in codes:
         seat_id = get_seat_id(code)
@@ -6,7 +6,7 @@ def part_one(codes):
             max_seat_id = seat_id
     return max_seat_id
 
-def part_two(codes):
+def part_two():
     seat_ids = []
     for code in codes:
         seat_ids.append(get_seat_id(code))
@@ -26,5 +26,5 @@ def binary_code_to_int(code, char_zero, char_one):
 with open('input/day5') as _file:
     codes = [line.rstrip() for line in _file]
 
-print(part_one(codes))
-print(part_two(codes))
+print(part_one())
+print(part_two())

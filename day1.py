@@ -1,9 +1,9 @@
-def part_one(nums):
+def part_one():
     for num in nums:
         if 2020 - num in set(nums):
             return num * (2020 - num)
 
-def part_two(nums):
+def part_two():
     for num1 in nums:
         for num2 in nums:
             if 2020 - num1 - num2 in set(nums):
@@ -12,5 +12,5 @@ def part_two(nums):
 with open('input/day1') as _file:
     nums = [int(line.rstrip()) for line in _file]
 
-print(part_one(nums))
-print(part_two(nums))
+print(part_one())
+print(part_two())

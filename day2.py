@@ -1,13 +1,13 @@
 import re
 
-def part_one(data_set):
+def part_one():
     valid = 0
     for data in data_set:
         if int(data[0]) <= data[3].count(data[2]) <= int(data[1]):
             valid += 1
     return valid
 
-def part_two(data_set):
+def part_two():
     valid = 0
     for data in data_set:
         if (data[3][int(data[0])-1] == data[2]) ^ (data[3][int(data[1])-1] == data[2]):
@@ -23,5 +23,5 @@ def get_data_set(lines):
 with open('input/day2') as _file:
     data_set = get_data_set(_file.readlines())
 
-print(part_one(data_set))
-print(part_two(data_set))
+print(part_one())
+print(part_two())

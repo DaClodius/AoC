@@ -1,13 +1,13 @@
 import re
 
-def part_one(passports):
+def part_one():
     valid_passports = 0
     for passport in passports:
         if check_primary_rule(passport):
             valid_passports += 1
     return valid_passports
 
-def part_two(passports):
+def part_two():
     valid_passports = 0
     for passport in passports:
         if check_primary_rule(passport) and check_extended_rules(passport):
@@ -46,5 +46,5 @@ def get_passports(passport_batches):
 with open('input/day4') as _file:
     passports = get_passports(_file.read().split('\n\n'))
 
-print(part_one(passports))
-print(part_two(passports))
+print(part_one())
+print(part_two())
