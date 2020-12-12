@@ -43,7 +43,7 @@ def get_passports(passport_batches):
         passports.append(passport)
     return passports
 
-with open('input/day4') as _file:
+with open('input/day04') as _file:
     passports = get_passports(_file.read().split('\n\n'))
 
 print(part_one())

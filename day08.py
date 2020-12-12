@@ -37,7 +37,7 @@ def part_two():
                     return
                 commands[pointer][0] = 'jmp'
 
-with open('input/day8') as file:
+with open('input/day08') as file:
     commands = [line.split() for line in file]
     
 print(part_one())

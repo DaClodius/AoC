@@ -3,8 +3,8 @@ def part_one():
 
 def part_two():
     product = 1
-    input = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
-    for tuple in input:
+    tuples = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
+    for tuple in tuples:
         product *= trees_on_slope(tuple[0], tuple[1])
     return product
 
@@ -19,7 +19,7 @@ def trees_on_slope(dx, dy):
         pos_y += dy    
     return trees
 
-with open('input/day3') as _file:
+with open('input/day03') as _file:
     grid = [line.rstrip() for line in _file]
 
 print(part_one())

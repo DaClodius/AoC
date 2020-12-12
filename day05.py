@@ -23,7 +23,7 @@ def get_seat_id(code):
 def binary_code_to_int(code, char_zero, char_one):
     return int((code.replace(char_zero, '0').replace(char_one, '1')), 2)
 
-with open('input/day5') as _file:
+with open('input/day05') as _file:
     codes = [line.rstrip() for line in _file]
 
 print(part_one())

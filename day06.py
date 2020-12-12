@@ -6,7 +6,7 @@ def part_one():
 def part_two():
     return sum([len([v for v in Counter(''.join(g)).values() if v == len(g)]) for g in groups])
 
-with open('input/day6') as f:
+with open('input/day06') as f:
     groups = [l.strip().split() for l in f.read().split('\n\n')]
 
 print(part_one())

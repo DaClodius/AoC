@@ -19,7 +19,7 @@ def count_children(parent_color, children, factor):
     return children
 
 relations = []
-with open('input/day7') as _file:
+with open('input/day07') as _file:
     for line in _file:
         words = line.split()
         parent_color = words[0] + words[1]
