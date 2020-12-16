@@ -1,11 +1,13 @@
 import re
 
+
 def part_one():
     valid_passports = 0
     for passport in passports:
         if check_primary_rule(passport):
             valid_passports += 1
     return valid_passports
+
 
 def part_two():
     valid_passports = 0
@@ -14,8 +16,10 @@ def part_two():
             valid_passports += 1
     return valid_passports
 
+
 def check_primary_rule(passport):
     return all(keys in passport.keys() for keys in ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'])
+
 
 def check_extended_rules(passport):
     try:
@@ -24,9 +28,10 @@ def check_extended_rules(passport):
         assert 2020 <= int(passport['eyr']) <= 2030
         assert passport['hgt'][-2:] in ['cm', 'in']
         height = int(passport['hgt'][:-2])
-        if(passport['hgt'][-2:] == 'cm'):
+        if passport['hgt'][-2:] == 'cm':
             assert 150 <= height <= 193
-        else: assert 59 <= height <= 76
+        else:
+            assert 59 <= height <= 76
         assert re.compile('^#[0-9a-f]{6}$').match(passport['hcl'])
         assert passport['ecl'] in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
         assert re.compile('^[0-9]{9}$').match(passport['pid'])
@@ -34,14 +39,16 @@ def check_extended_rules(passport):
         return False
     return True
 
+
 def get_passports(passport_batches):
-    passports = [{}]
+    passports_ = [{}]
     for passport_batch in passport_batches:
         passport = {}
         for batch_field in re.split(' |\n', passport_batch.rstrip()):
             passport[batch_field.split(':')[0]] = batch_field.split(':')[1]
-        passports.append(passport)
-    return passports
+        passports_.append(passport)
+    return passports_
+
 
 with open('input/day04') as _file:
     passports = get_passports(_file.read().split('\n\n'))

@@ -4,8 +4,10 @@ def part_one():
         deltas.append(adapters[index + 1] - adapters[index])
     return (deltas.count(1)) * (deltas.count(3))
 
+
 def part_two():
     return adapter_recursion(0, {})
+
 
 def adapter_recursion(index, done):
     if index == len(adapters) - 1:
@@ -18,6 +20,7 @@ def adapter_recursion(index, done):
             counter += adapter_recursion(next_index, done)
     done[index] = counter
     return counter
+
 
 with open('input/day10') as file:
     adapters = [int(line.strip()) for line in file]

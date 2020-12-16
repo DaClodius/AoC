@@ -10,20 +10,21 @@ def part_one():
         if commands[pointer][0] == 'nop':
             pointer += 1
         elif commands[pointer][0] == 'jmp':
-            pointer += int(commands[pointer][1])        
+            pointer += int(commands[pointer][1])
         elif commands[pointer][0] == 'acc':
             accumulator += int(commands[pointer][1])
             pointer += 1
-            
-        #part_two
+
+        # part_two
         if pointer >= len(commands):
             print(accumulator)
-            return -1 
+            return -1
+
 
 def part_two():
     checked_commands = []
     for pointer in range(len(commands)):
-        if not pointer in checked_commands:
+        if pointer not in checked_commands:
             if commands[pointer][0] == 'nop':
                 checked_commands.append(pointer)
                 commands[pointer][0] = 'jmp'
@@ -37,8 +38,9 @@ def part_two():
                     return
                 commands[pointer][0] = 'jmp'
 
+
 with open('input/day08') as file:
     commands = [line.split() for line in file]
-    
+
 print(part_one())
 part_two()

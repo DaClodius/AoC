@@ -1,22 +1,26 @@
 def part_one():
     return len(add_parents('shinygold', set()))
 
-def add_parents(child_color, bags):
+
+def add_parents(child_color_, bags):
     for relation in relations:
-        if relation[1] == child_color:
+        if relation[1] == child_color_:
             bags.add(relation[0])
             add_parents(relation[0], bags)
     return bags
 
+
 def part_two():
     return count_children('shinygold', 0, 1)
 
-def count_children(parent_color, children, factor):
+
+def count_children(parent_color_, children, factor):
     for relation in relations:
-        if relation[0] == parent_color:
+        if relation[0] == parent_color_:
             _factor = factor * relation[2]
             children = count_children(relation[1], children + _factor, _factor)
     return children
+
 
 relations = []
 with open('input/day07') as _file:
