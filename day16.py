@@ -1,25 +1,28 @@
+from typing import List
 import math
 
-rules = []
-your_ticket = []
-nearby_tickets = []
+Ticket = List[int]
 
-def part_one():
+rules = []
+your_ticket: Ticket = []
+nearby_tickets: List[Ticket] = []
+
+def part_one() -> int:
     sum_of_invalid_fields = 0
     for ticket in nearby_tickets:
         for field in ticket:
-            if not field_applies_to_any_rule(int(field)):
+            if not field_applies_to_any_rule(field):
                 sum_of_invalid_fields += int(field)
     return sum_of_invalid_fields
 
-def part_two():
+def part_two() -> int:
     field_order = {rule[0]: [] for rule in rules}
     valid_tickets = get_valid_tickets()
     product = 1
 
     for field in range(len(your_ticket)):
         for rule in rules:
-            if all(field_applies_to_rule(int(ticket[field]), rule) for ticket in valid_tickets):
+            if all(field_applies_to_rule(ticket[field], rule) for ticket in valid_tickets):
                 field_order[rule[0]].append(field)
 
     field_order = dict(sorted(field_order.items(), key=lambda e: len(e[1])))
@@ -33,22 +36,22 @@ def part_two():
         product *= int(your_ticket[value[0]])
     return product
 
-def get_valid_tickets():
+def get_valid_tickets() -> List[Ticket]:
     valid_tickets = [your_ticket]
     for ticket in nearby_tickets:
-        if all(field_applies_to_any_rule(int(field)) for field in ticket):
+        if all(field_applies_to_any_rule(field) for field in ticket):
             valid_tickets.append(ticket)
     return valid_tickets
 
-def field_applies_to_any_rule(field):
+def field_applies_to_any_rule(field: str) -> bool:
     for rule in rules:
         if field_applies_to_rule(field, rule):
             return True
     return False
 
-def field_applies_to_rule(field, rule):
+def field_applies_to_rule(field: str, rule: any) -> bool:
     for range_ in rule[1].split(' or '):
-        if int(range_.split('-')[0]) <= field <= int(range_.split('-')[1]):
+        if int(range_.split('-')[0]) <= int(field) <= int(range_.split('-')[1]):
             return True
     return False
 
