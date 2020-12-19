@@ -22,7 +22,7 @@ def adapter_recursion(index, done):
     return counter
 
 
-with open('input/day10') as file:
+with open('2020/input/day10') as file:
     adapters = [int(line.strip()) for line in file]
     adapters = sorted(adapters + [0, max(adapters) + 3])
 

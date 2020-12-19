@@ -86,7 +86,7 @@ def field_applies_to_rule(field: int, rule: Rule) -> bool:
     return False
 
 
-with open('input/day16') as file:
+with open('2020/input/day16') as file:
     data_parts = file.read().split('\n\n')
     for line in data_parts[0].split('\n'):
         rules.append(parse_rule(line))

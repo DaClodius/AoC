@@ -41,7 +41,7 @@ def add_neighbour_locations_by_dim(dim, neighbour_locations, location, x, y, z):
 
 def load_cubes(dim):
     cubes = {}
-    with open('input/day17') as file:
+    with open('2020/input/day17') as file:
         grid = [line.strip() for line in file]
         for y, line in enumerate(grid):
             for x, char in enumerate(line):

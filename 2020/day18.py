@@ -32,7 +32,7 @@ def operate(term):
     elif term[1] == '*':
         return int(term[0]) * int(term[2])
 
-with open('input/day18') as file:
+with open('2020/input/day18') as file:
     parts = [0, 0]
     for calc in [line.strip() for line in file]:
         parts[0] += int(solve(calc, False))

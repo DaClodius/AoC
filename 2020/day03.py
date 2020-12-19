@@ -22,7 +22,7 @@ def trees_on_slope(dx, dy):
     return trees
 
 
-with open('input/day03') as _file:
+with open('2020/input/day03') as _file:
     grid = [line.rstrip() for line in _file]
 
 print(part_one())

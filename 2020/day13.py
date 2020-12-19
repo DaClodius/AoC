@@ -18,7 +18,7 @@ def part_two(bus_ids_):  # chinese remainder theorem
     return value
 
 
-with open('input/day13') as file:
+with open('2020/input/day13') as file:
     timestamp = int(file.readline().strip())
     bus_ids = file.readline().strip().split(',')
 

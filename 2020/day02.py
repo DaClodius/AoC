@@ -24,7 +24,7 @@ def get_data_set(lines):
     return data_set_
 
 
-with open('input/day02') as _file:
+with open('2020/input/day02') as _file:
     data_set = get_data_set(_file.readlines())
 
 print(part_one())

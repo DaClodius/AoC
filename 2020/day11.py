@@ -55,7 +55,7 @@ floor = '.'
 empty = 'L'
 occupied = '#'
 
-with open('input/day11') as file:
+with open('2020/input/day11') as file:
     seat_map = list(list(line.strip()) for line in file)
 
 row_count = len(seat_map)

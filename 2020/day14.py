@@ -16,7 +16,7 @@ def binary_string(string, length):
     return '0' * (length - len(binary)) + binary
 
 
-with open('input/day14') as file:
+with open('2020/input/day14') as file:
     memory = [{}, {}]
     for line in [line.strip() for line in file]:
         if line.startswith('mask'):

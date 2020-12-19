@@ -9,7 +9,7 @@ def run(laps):
     return new
 
 
-with open('input/day15') as file:
+with open('2020/input/day15') as file:
     nums = [int(n) for n in file.readline().strip().split(',')]
 
 print(run(2020))  # part_one

@@ -23,7 +23,7 @@ def part_two():
     return min(sorted(num_set)) + max(sorted(num_set))
 
 
-with open('input/day09') as file:
+with open('2020/input/day09') as file:
     nums = [int(line.strip()) for line in file]
 
 print(part_one())

@@ -53,7 +53,7 @@ def change_position(position, action):
     return position
 
 
-with open('input/day12') as file:
+with open('2020/input/day12') as file:
     actions = [(line[:1], int(line.strip()[1:])) for line in file]
 
 print(solve(90, [0, 0], None))  # part_one

@@ -11,7 +11,7 @@ def part_two():
                 return num1 * num2 * (2020 - num1 - num2)
 
 
-with open('input/day01') as _file:
+with open('2020/input/day01') as _file:
     nums = [int(line.rstrip()) for line in _file]
 
 print(part_one())
