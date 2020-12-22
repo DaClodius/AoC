@@ -13,6 +13,7 @@ def solve(calc, pre):
                     calc = calc.replace(' '.join(term), str(operate(term)), 1)
     return calc
 
+
 def get_inner_calc(calc):
     start_index = 0
     open_braces = 0
@@ -26,17 +27,18 @@ def get_inner_calc(calc):
             if open_braces == 0:
                 return calc[start_index + 1: index]
 
+
 def operate(term):
     if term[1] == '+':
         return int(term[0]) + int(term[2])
     elif term[1] == '*':
         return int(term[0]) * int(term[2])
 
+
 with open('2020/input/day18') as file:
     parts = [0, 0]
-    for calc in [line.strip() for line in file]:
-        parts[0] += int(solve(calc, False))
-        parts[1] += int(solve(calc, True))
+    for calc_ in [line.strip() for line in file]:
+        parts[0] += int(solve(calc_, False))
+        parts[1] += int(solve(calc_, True))
     print(parts[0])
     print(parts[1])
-    
