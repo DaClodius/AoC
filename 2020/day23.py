@@ -1,9 +1,7 @@
 class Cup:
-    previous: int
     next_: int
 
-    def __init__(self, previous, next_):
-        self.previous = previous
+    def __init__(self, next_):
         self.next_ = next_
 
 def part_one(cups):
@@ -29,7 +27,6 @@ def run_game(cups, current, moves):
         # pick three cups and close chain
         three_cups = pick_three_cups(cups, current)
         cups[current].next_ = cups[three_cups[2]].next_
-        cups[three_cups[2]].previous = current        
         # get destination
         destination = get_destination(cups, current, min_max)
         while destination in three_cups:
@@ -37,8 +34,6 @@ def run_game(cups, current, moves):
         # insert three_cups after destination
         post_destination = cups[destination].next_
         cups[destination].next_ = three_cups[0]
-        cups[three_cups[0]].previous = destination
-        cups[post_destination].previous = three_cups[2]
         cups[three_cups[2]].next_ = post_destination
         # choose next cup
         current = cups[current].next_
@@ -63,24 +58,14 @@ def build_cup_chain():
         next_ = index + 1
         if next_ >= len(cups_):
             next_ = 0
-        previous = index - 1
-        if previous < 0:
-            previous = len(cups_) - 1
-        cups[label] = Cup(cups_[previous], cups_[next_])
+        cups[label] = Cup(cups_[next_])
     return cups
 
 def one_million_cups(cups):
-    first_cup = next(iter(cups))
-    last_cup = cups[first_cup].previous
-    # fix chain
-    cups[first_cup].previous = 10**6
-    cups[last_cup].next_ = max(cups.keys()) + 1
-    # add cups...
-    for i in range(cups[last_cup].next_, 10**6 + 1):
-        cups[i] = Cup(i - 1, i + 1)
-    # close chain
-    cups[cups[last_cup].next_].previous = last_cup
-    cups[10**6].next_ = first_cup
+    cups[list(cups.keys())[-1]].next_ = len(cups) + 1
+    for i in range(len(cups) + 1, 10**6 + 1):
+        cups[i] = Cup(i + 1)
+    cups[10**6].next_ = next(iter(cups))
     return cups
 
 def get_cups():
