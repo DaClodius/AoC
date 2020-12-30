@@ -1,44 +1,100 @@
+class Tile:
+    
+    def __init__(self, id, pixels):
+        self.id = id
+        self.pixels = pixels
+        self.dim = len(pixels)
+
+    @staticmethod
+    def parse_raw(raw):
+        return Tile(int(raw.split('\n')[0][-5: -1]), [line for line in raw.split('\n')[1:]])
+
+    def top(self):
+        return self.pixels[0]
+
+    def bottom(self):
+        return self.pixels[-1]
+
+    def right(self):
+        return ''.join(t[-1] for t in self.pixels)
+
+    def left(self):
+        return ''.join(t[0] for t in self.pixels)
+
+    def flip(self):
+        self.pixels = [t for t in reversed(self.pixels)]
+
+    def rotate(self):
+        self.pixels = [''.join([self.pixels[self.dim - j - 1][i] for j in range(self.dim)]) for i in range(self.dim)]
+
+    def cut_edges(self):
+        self.pixels = [''.join([self.pixels[i][j] for j in range(1, self.dim - 1)]) for i in range(1, self.dim - 1)]
+
+    transitions = [lambda t: t, lambda t: t.rotate(), lambda t: t.rotate(), lambda t: t.rotate(), \
+        lambda t: t.flip(), lambda t: t.rotate(), lambda t: t.rotate(), lambda t: t.rotate()]
+
+
+def sort_tiles(tiles, tiles_, used):
+    if len(tiles_) == len(tiles):
+        return tiles_
+    for tile in tiles:
+        if tile not in used:
+            for transition in Tile.transitions:
+                transition(tile)
+                if check_border_match(tiles_, tile):
+                    result = sort_tiles(tiles, tiles_ + [tile], used.union({tile}))
+                    if result:
+                        return result
+
+
+def check_border_match(tiles_, tile):
+    return not ((len(tiles_) + 1 - IMAGE_DIM > 0 and tile.top() != tiles_[len(tiles_) - IMAGE_DIM].bottom()) \
+        or ((len(tiles_) + 1) % IMAGE_DIM != 1 and tile.left() != tiles_[len(tiles_) - 1].right()))
+
+
 def part_one():
-    matches = dict([key, 0] for key in tiles.keys())
-    for root in tiles:
-        for tile in tiles:         
-            if tile is not root and check_match(tiles[root], tiles[tile]):
-                matches[root] += 1
-    result = 1
-    for tile_id in [k for k, v in matches.items() if v == 2]:
-        result *= tile_id
-    return result
+    return SORTED_TILES[0].id * SORTED_TILES[IMAGE_DIM - 1].id * SORTED_TILES[len(TILES) - IMAGE_DIM].id * SORTED_TILES[len(TILES) - 1].id
 
-def check_match(root, tile):
-    for _ in range(2):
-        for _ in range(4):
-            if compare_edges(root, tile):
-                return True
-            tile = rotate_tile(tile)
-        root = rotate_tile(root)
-        for _ in range(4):
-            if compare_edges(root, tile):
-                return True
-            tile = rotate_tile(tile)
-        tile = flip_tile(tile)
-    return False
 
-def compare_edges(root, tile):
-    if tile[0] == root[len(tile)-1]:
-        return True
-    if tile[len(tile)-1] == root[0]:
-        return True
-    return False
+def part_two():
 
-def rotate_tile(tile):
-    return [[tile[x][y] for x in range(len(tile))] for y in range(len(tile)-1, -1, -1)]
+    def image_from_sorted_tiles():
+        image = ['' for _ in range((TILES[0].dim - 2) * IMAGE_DIM)]
+        for i, tile in enumerate(SORTED_TILES):
+            tile.cut_edges()
+            for j, pixels in enumerate(tile.pixels):
+                image[(i // IMAGE_DIM) * (TILES[0].dim - 2) + j] += pixels
+        return Tile(None, image)
 
-def flip_tile(tile):
-    return [[tile[y][x] for x in range(len(tile))] for y in range(len(tile)-1, -1, -1)]
+    def count_monsters(monster, image):
+        for transition in Tile.transitions:
+            transition(image)
+            count = 0
+            for i in range(0, len(image.pixels) - len(monster) + 1):
+                for j in range(0, len(image.pixels[0]) - len(monster[0]) + 1):
+                    valid = True
+                    for k in range(len(monster)):
+                        for l in range(len(monster[0])):
+                            if (monster[k][l] != '.') and monster[k][l] != image.pixels[i + k][j + l]:
+                                valid = False
+                    if valid:
+                        count += 1
+            if count > 0:
+                return count
+        return 0
 
-tiles = {}
-with open('2020/input/day20') as file:
-    for tile in file.read().strip().split('\n\n'):
-        tiles[int(tile.split('\n')[0][-5: -1])] = [[char for char in line] for line in tile.split('\n')[1:]]
+    monster = [
+        '..................#.',
+        '#....##....##....###',
+        '.#..#..#..#..#..#...',
+        ]
+    image = image_from_sorted_tiles()
+    return sum(line.count('#') for line in image.pixels) - count_monsters(monster, image) * 15
+
+
+TILES = [Tile.parse_raw(raw_tile) for raw_tile in open('2020/input/day20').read().strip().split("\n\n")]
+IMAGE_DIM = int(len(TILES) ** 0.5)
+SORTED_TILES = sort_tiles(TILES, [], set())
 
 print(part_one())
+print(part_two())
